@@ -22,10 +22,15 @@ class ChargingStation(BaseModel):
     available_slots: int
 
 class Booking(BaseModel):
+    id: Optional[str] = Field(default_factory=str, alias="_id")
     user_id: int
     station_id: int
     time_slot: str
     status: str  # "booked", "pending", etc.
+
+    class Config:
+        allow_population_by_field_name = True
+        json_encoders = {ObjectId: str}
 
 class Payment(BaseModel):
     user_id: int

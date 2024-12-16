@@ -81,60 +81,39 @@ const Stations = () => {
   };
 
   return (
-    <div style={{ padding: "20px", fontFamily: "Arial, sans-serif" }}>
-      <h1 style={{ textAlign: "center", color: "#4CAF50" }}>Find EV Charging Stations</h1>
+    <div style={styles.container}>
+      <h1 style={styles.header}>Find EV Charging Stations</h1>
 
       {/* Fetch Live Location Button */}
       <button
         onClick={handleFetchLiveLocation}
-        style={{
-          backgroundColor: "#4CAF50",
-          color: "white",
-          border: "none",
-          padding: "10px 15px",
-          borderRadius: "5px",
-          cursor: "pointer",
-          marginBottom: "10px",
-        }}
+        style={styles.liveLocationButton}
       >
         Use My Live Location
       </button>
 
       {/* Search Bar for Manual Location Entry */}
-      <div style={{ marginBottom: "10px" }}>
+      <div style={styles.searchBarContainer}>
         <input
           type="text"
           placeholder="Enter a location"
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
-          style={{
-            padding: "10px",
-            width: "calc(100% - 120px)",
-            marginRight: "10px",
-            borderRadius: "5px",
-            border: "1px solid #ccc",
-          }}
+          style={styles.searchInput}
         />
         <button
           onClick={handleSearchLocation}
-          style={{
-            backgroundColor: "#4CAF50",
-            color: "white",
-            border: "none",
-            padding: "10px 15px",
-            borderRadius: "5px",
-            cursor: "pointer",
-          }}
+          style={styles.searchButton}
         >
           Search Location
         </button>
       </div>
 
-      {error && <p style={{ color: "red", fontWeight: "bold" }}>{error}</p>}
+      {error && <p style={styles.error}>{error}</p>}
 
       {/* Display Address */}
       {address && (
-        <div style={{ marginTop: "10px" }}>
+        <div style={styles.addressContainer}>
           <h3>Address/Location:</h3>
           <p>{address}</p>
         </div>
@@ -143,48 +122,24 @@ const Stations = () => {
       {/* Fetch Stations Button */}
       <button
         onClick={handleFetchStations}
-        style={{
-          backgroundColor: "#008CBA",
-          color: "white",
-          border: "none",
-          padding: "10px 15px",
-          borderRadius: "5px",
-          cursor: "pointer",
-          marginTop: "15px",
-        }}
+        style={styles.fetchStationsButton}
       >
         Fetch Nearby Stations
       </button>
 
       {/* Display Nearest Stations */}
       {stations.length > 0 && (
-        <div style={{ marginTop: "20px" }}>
+        <div style={styles.stationsListContainer}>
           <h3>Nearest EV Charging Stations:</h3>
-          <ul style={{ listStyleType: "none", padding: 0 }}>
+          <ul style={styles.stationsList}>
             {stations.map((station, index) => (
-              <li
-                key={index}
-                style={{
-                  marginBottom: "15px",
-                  padding: "10px",
-                  border: "1px solid #ddd",
-                  borderRadius: "5px",
-                }}
-              >
-                <strong style={{ fontSize: "18px" }}>{station.name}</strong>
+              <li key={index} style={styles.stationItem}>
+                <strong style={styles.stationName}>{station.name}</strong>
                 <p>{station.vicinity}</p>
                 {/* Book Slot Button */}
                 <button
                   onClick={() => handleBooking(station)}
-                  style={{
-                    backgroundColor: "#4CAF50",
-                    color: "white",
-                    border: "none",
-                    padding: "5px 10px",
-                    borderRadius: "5px",
-                    cursor: "pointer",
-                    marginRight: "10px",
-                  }}
+                  style={styles.bookSlotButton}
                 >
                   Book Slot
                 </button>
@@ -193,14 +148,7 @@ const Stations = () => {
                   href={`https://www.google.com/maps/dir/?api=1&origin=${location.lat},${location.lng}&destination=${station.geometry.location.lat},${station.geometry.location.lng}`}
                   target="_blank"
                   rel="noopener noreferrer"
-                  style={{
-                    backgroundColor: "#008CBA",
-                    color: "white",
-                    textDecoration: "none",
-                    padding: "5px 10px",
-                    borderRadius: "5px",
-                    cursor: "pointer",
-                  }}
+                  style={styles.navigateButton}
                 >
                   Navigate
                 </a>
@@ -211,6 +159,108 @@ const Stations = () => {
       )}
     </div>
   );
+};
+
+const styles = {
+  container: {
+    padding: "20px",
+    fontFamily: "Arial, sans-serif",
+    maxWidth: "800px",
+    margin: "0 auto",
+  },
+  header: {
+    textAlign: "center",
+    color: "#4CAF50",
+    fontSize: "2rem",
+    marginBottom: "20px",
+  },
+  liveLocationButton: {
+    backgroundColor: "#4CAF50",
+    color: "white",
+    border: "none",
+    padding: "12px 18px",
+    borderRadius: "5px",
+    cursor: "pointer",
+    marginBottom: "20px",
+    width: "100%",
+    fontSize: "1rem",
+  },
+  searchBarContainer: {
+    display: "flex",
+    marginBottom: "20px",
+  },
+  searchInput: {
+    padding: "10px",
+    width: "calc(100% - 120px)",
+    marginRight: "10px",
+    borderRadius: "5px",
+    border: "1px solid #ccc",
+  },
+  searchButton: {
+    backgroundColor: "#4CAF50",
+    color: "white",
+    border: "none",
+    padding: "12px 18px",
+    borderRadius: "5px",
+    cursor: "pointer",
+    fontSize: "1rem",
+  },
+  error: {
+    color: "red",
+    fontWeight: "bold",
+    textAlign: "center",
+  },
+  addressContainer: {
+    marginTop: "20px",
+    textAlign: "center",
+  },
+  fetchStationsButton: {
+    backgroundColor: "#008CBA",
+    color: "white",
+    border: "none",
+    padding: "12px 18px",
+    borderRadius: "5px",
+    cursor: "pointer",
+    marginTop: "20px",
+    width: "100%",
+    fontSize: "1rem",
+  },
+  stationsListContainer: {
+    marginTop: "30px",
+  },
+  stationsList: {
+    listStyleType: "none",
+    padding: 0,
+  },
+  stationItem: {
+    marginBottom: "20px",
+    padding: "15px",
+    border: "1px solid #ddd",
+    borderRadius: "5px",
+    boxShadow: "0 2px 5px rgba(0, 0, 0, 0.1)",
+  },
+  stationName: {
+    fontSize: "18px",
+    fontWeight: "bold",
+    color: "#333",
+  },
+  bookSlotButton: {
+    backgroundColor: "#4CAF50",
+    color: "white",
+    border: "none",
+    padding: "8px 15px",
+    borderRadius: "5px",
+    cursor: "pointer",
+    marginRight: "15px",
+  },
+  navigateButton: {
+    backgroundColor: "#008CBA",
+    color: "white",
+    textDecoration: "none",
+    padding: "8px 15px",
+    borderRadius: "5px",
+    cursor: "pointer",
+  },
 };
 
 export default Stations;
