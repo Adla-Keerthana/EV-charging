@@ -10,7 +10,8 @@ const Login = () => {
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch("http://localhost:8000/auth/login", {
+      console.log("Login request:", email, password);
+      const response = await fetch("http://localhost:8000/login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -23,6 +24,7 @@ const Login = () => {
         console.log("Login successful:", data);
         // Store the JWT token in localStorage or sessionStorage
         localStorage.setItem("access_token", data.access_token);
+        localStorage.setItem("user_id", data.user_id);
         navigate("/bookings"); // Redirect to bookings page
       } else {
         const errorData = await response.json();

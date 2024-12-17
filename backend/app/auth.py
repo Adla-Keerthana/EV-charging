@@ -1,10 +1,10 @@
-
 from jose import JWTError, jwt
 from passlib.context import CryptContext
 from datetime import datetime, timedelta
 from fastapi import HTTPException, Depends
 from fastapi.security import OAuth2PasswordBearer
 from fastapi import Response, Request
+
 SECRET_KEY = "random@secret"
 ALGORITHM = "HS256"
 ACCESS_TOKEN_EXPIRE_MINUTES = 30
@@ -27,8 +27,7 @@ def create_access_token(data: dict):
     return jwt.encode(to_encode, SECRET_KEY, algorithm=ALGORITHM)
 
 
-oauth2_scheme = OAuth2PasswordBearer(
-    tokenUrl="token")
+oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
 
 
 async def get_current_user(token: str = Depends(oauth2_scheme)):
@@ -40,9 +39,7 @@ async def get_current_user(token: str = Depends(oauth2_scheme)):
         print("username", username)
 
         if username is None:
-            raise HTTPException(
-                status_code=401, detail="Invalid authentication"
-            )
+            raise HTTPException(status_code=401, detail="Invalid authentication")
         return username
     except JWTError:
         raise HTTPException(status_code=401, detail="Invalid authentication")

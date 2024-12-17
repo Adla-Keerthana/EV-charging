@@ -23,6 +23,8 @@ const Signup = () => {
     const data = await response.json();
 
     if (response.ok) {
+      localStorage.setItem("access_token", data.access_token);
+      localStorage.setItem("user_id", data.user_id);
       window.location.href = "/login";
     } else {
       setError(data.detail || "Signup failed");

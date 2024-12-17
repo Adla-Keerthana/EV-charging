@@ -77,7 +77,8 @@ const Stations = () => {
 
   // Navigate to Booking Page
   const handleBooking = (station) => {
-    navigate("/booking", { state: { station } });
+    console.log("station", station.place_id);
+    navigate("/bookings", { state: { station } });
   };
 
   return (
@@ -101,10 +102,7 @@ const Stations = () => {
           onChange={(e) => setSearchQuery(e.target.value)}
           style={styles.searchInput}
         />
-        <button
-          onClick={handleSearchLocation}
-          style={styles.searchButton}
-        >
+        <button onClick={handleSearchLocation} style={styles.searchButton}>
           Search Location
         </button>
       </div>
@@ -120,10 +118,7 @@ const Stations = () => {
       )}
 
       {/* Fetch Stations Button */}
-      <button
-        onClick={handleFetchStations}
-        style={styles.fetchStationsButton}
-      >
+      <button onClick={handleFetchStations} style={styles.fetchStationsButton}>
         Fetch Nearby Stations
       </button>
 

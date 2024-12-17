@@ -9,16 +9,15 @@ auth_router = APIRouter()
 COOKIE_NAME = "access_token"
 
 
-@auth_router.post("users/signup", response_model=Token)
+@auth_router.post("/signup", response_model=Token)
 async def signup(user: UserCreate, response: Response):
     user_exist = await db["users"].find_one({"username": user.username})
     if user_exist:
-        raise HTTPException(
-            status_code=400, detail="Username already registered")
+        raise HTTPException(status_code=400, detail="Username already registered")
 
     hashed_password = get_password_hash(user.password)
     user_data = {"username": user.username, "password": hashed_password}
-    await db["users"].insert_one(user_data)
+    result = await db["users"].insert_one(user_data)
     access_token = create_access_token({"sub": user.username})
 
     # Set the access token in an HTTP-only, secure cookie
@@ -29,16 +28,22 @@ async def signup(user: UserCreate, response: Response):
         secure=True,  # Set to True if using HTTPS
         samesite="Lax",
     )
-    return {"access_token": access_token, "token_type": "bearer"}
+    return {
+        "access_token": access_token,
+        "token_type": "bearer",
+        "user_id": result.inserted_id,
+    }
 
 
-@auth_router.post("users/login", response_model=Token)
+@auth_router.post("/login", response_model=Token)
 async def login(user: UserLogin, response: Response):
-    db_user = await db["users"].find_one({"username": user.username})
+    print("Entered login")
+    db_user = await db["users"].find_one({"username": user.email})
     if not db_user or not verify_password(user.password, db_user["password"]):
         raise HTTPException(status_code=401, detail="Invalid credentials")
-    access_token = create_access_token({"sub": user.username})
+    access_token = create_access_token({"sub": user.email})
     print("access_token", access_token)
+    print("user_id", db_user["_id"])
 
     # Set the access token in the cookies
     response.set_cookie(
@@ -48,4 +53,8 @@ async def login(user: UserLogin, response: Response):
         secure=True,
         samesite="Lax",
     )
-    return {"access_token": access_token, "token_type": "bearer"}
+    return {
+        "access_token": access_token,
+        "token_type": "bearer",
+        "user_id": str(db_user["_id"]),
+    }
