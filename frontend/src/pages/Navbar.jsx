@@ -3,6 +3,11 @@ import { Link } from "react-router-dom";
 const Navbar = () => {
   // Check if the token exists in localStorage (or sessionStorage)
   const token = localStorage.getItem("access_token"); // You can replace this with sessionStorage if you prefer
+  const handleLogout = () => {
+    localStorage.removeItem("access_token");
+    localStorage.removeItem("user_id");
+    window.location.href = "/";
+  };
 
   return (
     <nav className="bg-blue-600 p-6 shadow-lg transform transition-all duration-500 ease-in-out hover:scale-105">
@@ -48,7 +53,7 @@ const Navbar = () => {
                 Profile
               </Link>
               <Link
-                to="/logout"
+                onClick={handleLogout}
                 className="text-white px-6 hover:text-yellow-400 transition"
               >
                 Logout

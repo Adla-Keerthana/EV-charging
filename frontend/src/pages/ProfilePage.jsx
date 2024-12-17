@@ -82,10 +82,10 @@ const UserBookings = () => {
             <h2 className="text-lg font-semibold text-gray-800">
               {booking.full_name}
             </h2>
-            <p className="text-sm text-gray-600 mt-1">
+            {/* <p className="text-sm text-gray-600 mt-1">
               <span className="font-medium">Station ID:</span>{" "}
               {booking.station_id}
-            </p>
+            </p> */}
             <p className="text-sm text-gray-600 mt-1">
               <span className="font-medium">Time Slot:</span>{" "}
               {booking.time_slot}

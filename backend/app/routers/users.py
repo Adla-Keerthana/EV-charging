@@ -31,7 +31,7 @@ async def signup(user: UserCreate, response: Response):
     return {
         "access_token": access_token,
         "token_type": "bearer",
-        "user_id": result.inserted_id,
+        "user_id": str(result.inserted_id),
     }
 
 
