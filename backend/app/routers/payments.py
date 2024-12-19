@@ -1,7 +1,7 @@
 from fastapi import APIRouter
 from app.services.payment_service import process_payment
 from pydantic import BaseModel
-
+from app.database import db
 router = APIRouter()
 
 class PaymentRequest(BaseModel):
