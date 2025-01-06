@@ -7,11 +7,14 @@ import Signup from "./pages/Signup";
 import Booking from "./pages/booking";
 import Confirmation from "./pages/confirmation";
 import UserBookings from "./pages/ProfilePage";
+import StripeElement from "./pages/Stripe";
 
 function App() {
   return (
     <Routes>
-      <Route path="/" element={<Home />} /> {/* Home route */}
+      <Route path="/payment" element={<StripeElement />} />
+
+    <Route path="/" element={<Home />} /> Home route
       <Route path="/stations" element={<Stations />} />
       <Route path="/login" element={<Login />} />
       <Route path="/signup" element={<Signup />} />
