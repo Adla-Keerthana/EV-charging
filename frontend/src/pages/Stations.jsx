@@ -10,7 +10,7 @@ const Stations = () => {
   const [searchQuery, setSearchQuery] = useState("");
 
   const navigate = useNavigate();
-  const GOMAPS_API_KEY = "AlzaSytXtChtz8euiDoT5-OGlwYF4a6KSvGylxd"; // Replace with your GoMaps API key
+  const GOMAPS_API_KEY = "AlzaSynkIcBiGBQU8NgojbN_XAa5IIpK6kn6WQW"; // Replace with your GoMaps API key
 
   // Fetch user's live location
   const handleFetchLiveLocation = () => {
